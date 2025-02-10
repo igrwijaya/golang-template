@@ -52,13 +52,13 @@ func (q *todoGraphql) Mutation() *graphql.Object {
 						},
 					}
 
-					createdTodo, errCreate := q.todoRepo.Create(todo)
+					errCreate := q.todoRepo.Create(&todo)
 
 					if errCreate != nil {
 						return nil, errCreate
 					}
 
-					return createdTodo, nil
+					return todo, nil
 				},
 			},
 

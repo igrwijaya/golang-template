@@ -1,6 +1,10 @@
 package graphqlobjects
 
-import "github.com/graphql-go/graphql"
+import (
+	"igrwijaya-go-template/internal/domain/todo"
+
+	"github.com/graphql-go/graphql"
+)
 
 func TodoObjectGraph() *graphql.Object {
 	return graphql.NewObject(
@@ -8,7 +12,12 @@ func TodoObjectGraph() *graphql.Object {
 			Name: "Todo",
 			Fields: graphql.Fields{
 				"Id": &graphql.Field{
-					Type: graphql.Int,
+					Type: graphql.NewNonNull(graphql.Int),
+					Resolve: func(params graphql.ResolveParams) (interface{}, error) {
+						todo := params.Source.(todo.Todo)
+
+						return todo.Id, nil
+					},
 				},
 				"Title": &graphql.Field{
 					Type: graphql.String,
@@ -18,9 +27,19 @@ func TodoObjectGraph() *graphql.Object {
 				},
 				"CreatedAt": &graphql.Field{
 					Type: graphql.DateTime,
+					Resolve: func(params graphql.ResolveParams) (interface{}, error) {
+						todo := params.Source.(todo.Todo)
+
+						return todo.CreatedAt, nil
+					},
 				},
 				"UpdatedAt": &graphql.Field{
 					Type: graphql.DateTime,
+					Resolve: func(params graphql.ResolveParams) (interface{}, error) {
+						todo := params.Source.(todo.Todo)
+
+						return todo.CreatedAt, nil
+					},
 				},
 			},
 		},

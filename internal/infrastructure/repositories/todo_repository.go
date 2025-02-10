@@ -19,14 +19,14 @@ func (repo *todoRepository) Migrate() {
 	}
 }
 
-func (repo *todoRepository) Create(todo todo.Todo) (todo.Todo, error) {
+func (repo *todoRepository) Create(todo *todo.Todo) error {
 	createResult := repo.db.Create(&todo)
 
 	if createResult.Error != nil {
-		return todo, createResult.Error
+		return createResult.Error
 	}
 
-	return todo, nil
+	return nil
 }
 
 func (repo *todoRepository) Delete(id uint) error {
